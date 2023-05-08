@@ -21,6 +21,6 @@ public abstract class Cell {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this);
+        return Objects.hash(isAlive());
     }
 }
