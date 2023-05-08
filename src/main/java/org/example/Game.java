@@ -33,9 +33,9 @@ public class Game {
         CellStatus[][] starterBoard = new CellStatus[rows][cols];
         CellStatus[] characters = CellStatus.values();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-               starterBoard[i][j] = characters[new SecureRandom().nextInt(characters.length)];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+               starterBoard[row][col] = characters[new SecureRandom().nextInt(characters.length)];
             }
         }
 

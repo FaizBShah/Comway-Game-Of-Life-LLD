@@ -17,13 +17,13 @@ public class BoardConverter {
 
         CellStatus[][] resBoard = new CellStatus[rows][cols];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (board[i][j] == null) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (board[row][col] == null) {
                     throw new IllegalStateException("All cells of the board must be non-null");
                 }
 
-                resBoard[i][j] = board[i][j].isAlive() ? FILLED : EMPTY;
+                resBoard[row][col] = board[row][col].isAlive() ? FILLED : EMPTY;
             }
         }
 
@@ -44,13 +44,13 @@ public class BoardConverter {
 
         Cell[][] resBoard = new Cell[rows][cols];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (board[i][j] == null) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (board[row][col] == null) {
                     throw new IllegalStateException("All cells of the board must be non-null");
                 }
 
-                resBoard[i][j] = board[i][j] == FILLED ? new AliveCell() : new DeadCell();
+                resBoard[row][col] = board[row][col] == FILLED ? new AliveCell() : new DeadCell();
             }
         }
 
