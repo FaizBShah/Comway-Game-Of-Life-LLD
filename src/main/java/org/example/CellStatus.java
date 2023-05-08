@@ -1,6 +1,6 @@
 package org.example;
 
-public enum CellCharacter {
+public enum CellStatus {
     FILLED,
     EMPTY
 }

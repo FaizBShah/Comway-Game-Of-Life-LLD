@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.example.CellCharacter.*;
+import static org.example.CellStatus.*;
 
 class BoardTest {
 
     @Test
     void shouldBoardObjectGetCreatedSuccessfully() {
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, EMPTY, EMPTY },
                 { FILLED, FILLED, EMPTY }
@@ -25,8 +25,8 @@ class BoardTest {
     }
 
     @Test
-    void shouldThrowAnErrorIfTryingToPassAMatrixOfInvalidLength() {
-        CellCharacter[][] gameBoard = new CellCharacter[0][0];
+    void shouldThrowAnErrorIfTryingToPassABoardOfInvalidLength() {
+        CellStatus[][] gameBoard = new CellStatus[0][0];
 
         Throwable exception = assertThrows(IllegalStateException.class, () -> new Board(gameBoard));
 
@@ -34,20 +34,29 @@ class BoardTest {
     }
 
     @Test
+    void shouldThrowAnErrorIfTryingToPassABoardWithNullCells() {
+        CellStatus[][] gameBoard = new CellStatus[3][3];
+
+        Throwable exception = assertThrows(IllegalStateException.class, () -> new Board(gameBoard));
+
+        assertEquals("All cells of the board must be non-null", exception.getMessage());
+    }
+
+    @Test
     void shouldGenerateCorrectNextBoard() {
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, FILLED, EMPTY }
         };
-        CellCharacter[][] expectedGameBoard = {
+        CellStatus[][] expectedGameBoard = {
                 { EMPTY, EMPTY, EMPTY },
                 { FILLED, FILLED, FILLED },
                 { FILLED, FILLED, EMPTY }
         };
 
         Board board = new Board(gameBoard);
-        CellCharacter[][] resultGameBoard = board.next();
+        CellStatus[][] resultGameBoard = board.next();
 
         assertEquals(expectedGameBoard.length, resultGameBoard.length);
         assertEquals(expectedGameBoard[0].length, resultGameBoard[0].length);

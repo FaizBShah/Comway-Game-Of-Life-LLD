@@ -1,23 +1,26 @@
 package org.example;
 
-public class Cell {
-    private final CellCharacter cellCharacter;
+import java.util.Objects;
 
-    public Cell(CellCharacter cellCharacter) {
-        this.cellCharacter = cellCharacter;
-    }
-
-    public boolean isAlive() {
-        return cellCharacter == CellCharacter.FILLED;
-    }
+public abstract class Cell {
+    public abstract boolean isAlive();
 
     public Cell next(int numberOfAliveNeighbours) {
         if (numberOfAliveNeighbours < 0 || numberOfAliveNeighbours > 8) {
             throw new IllegalStateException("Number of neighbours of a cell can only be between 0 and 8");
         }
 
-        CellCharacter nextCellCharacter = CellOperations.nextCellCharacter(isAlive(), numberOfAliveNeighbours);
+        return CellOperations.nextCell(isAlive(), numberOfAliveNeighbours);
+    }
 
-        return new Cell(nextCellCharacter);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        return o != null && getClass() == o.getClass();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this);
     }
 }

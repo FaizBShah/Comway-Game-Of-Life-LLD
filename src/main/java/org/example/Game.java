@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 public class Game {
     private Board board;
 
-    public void startWithBoard(CellCharacter[][] starterBoard) {
+    public void startWithBoard(CellStatus[][] starterBoard) {
         if (board != null) {
             throw new IllegalStateException("Game has already been started with a board");
         }
@@ -30,8 +30,8 @@ public class Game {
             throw new IllegalStateException("Dimensions of the board should be valid");
         }
 
-        CellCharacter[][] starterBoard = new CellCharacter[rows][cols];
-        CellCharacter[] characters = CellCharacter.values();
+        CellStatus[][] starterBoard = new CellStatus[rows][cols];
+        CellStatus[] characters = CellStatus.values();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -42,7 +42,7 @@ public class Game {
         board = new Board(starterBoard);
     }
 
-    public CellCharacter[][] tick() {
+    public CellStatus[][] tick() {
         if (board == null) {
             throw new IllegalStateException("Game has not been initialized with a board yet");
         }
@@ -50,7 +50,7 @@ public class Game {
         return board.next();
     }
 
-    public CellCharacter[][] tick(int n) {
+    public CellStatus[][] tick(int n) {
         if (board == null) {
             throw new IllegalStateException("Game has not been initialized with a board yet");
         }

@@ -2,7 +2,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import static org.example.CellCharacter.*;
+import static org.example.CellStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -13,9 +13,9 @@ class GameTest {
     }
 
     @Test
-    void shouldGameBeInitializedWithABoardSuccessFully() {
+    void shouldGameBeInitializedWithABoardSuccessfully() {
         Game game = new Game();
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, FILLED, EMPTY }
@@ -28,7 +28,7 @@ class GameTest {
     @Test
     void shouldThrowAnErrorIfTryingToInitializeAGameOnceItHasAlreadyStarted() {
         Game game = new Game();
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, FILLED, EMPTY }
@@ -49,7 +49,7 @@ class GameTest {
 
     @Test
     void shouldThrowAnErrorIfTryingToInitializeTheGameWithInvalidBoardDimensions() {
-        CellCharacter[][] gameBoard = new CellCharacter[0][0];
+        CellStatus[][] gameBoard = new CellStatus[0][0];
 
         Throwable exception = assertThrows(IllegalStateException.class, () -> new Game().startWithBoard(gameBoard));
 
@@ -63,7 +63,7 @@ class GameTest {
         assertDoesNotThrow(() -> game.startWithRandomBoardOfSize(3, 3));
         assertDoesNotThrow(() -> game.tick());
 
-        CellCharacter[][] board = game.tick();
+        CellStatus[][] board = game.tick();
 
         assertEquals(3, board.length);
         assertEquals(3, board[0].length);
@@ -98,19 +98,19 @@ class GameTest {
     @Test
     void shouldTickWorkCorrectly() {
         Game game = new Game();
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, FILLED, EMPTY }
         };
-        CellCharacter[][] expectedGameBoard = {
+        CellStatus[][] expectedGameBoard = {
                 { EMPTY, EMPTY, EMPTY },
                 { FILLED, FILLED, FILLED },
                 { FILLED, FILLED, EMPTY }
         };
 
         game.startWithBoard(gameBoard);
-        CellCharacter[][] resultGameBoard = game.tick();
+        CellStatus[][] resultGameBoard = game.tick();
 
         assertEquals(expectedGameBoard.length, resultGameBoard.length);
         assertEquals(expectedGameBoard[0].length, resultGameBoard[0].length);
@@ -131,19 +131,19 @@ class GameTest {
     @Test
     void shouldTickNTimesWorkCorrectly() {
         Game game = new Game();
-        CellCharacter[][] gameBoard = {
+        CellStatus[][] gameBoard = {
                 { EMPTY, EMPTY, FILLED },
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, FILLED, EMPTY }
         };
-        CellCharacter[][] expectedGameBoard = {
+        CellStatus[][] expectedGameBoard = {
                 { EMPTY, FILLED, EMPTY },
                 { FILLED, EMPTY, FILLED },
                 { FILLED, EMPTY, FILLED }
         };
 
         game.startWithBoard(gameBoard);
-        CellCharacter[][] resultGameBoard = game.tick(2);
+        CellStatus[][] resultGameBoard = game.tick(2);
 
         assertEquals(expectedGameBoard.length, resultGameBoard.length);
         assertEquals(expectedGameBoard[0].length, resultGameBoard[0].length);

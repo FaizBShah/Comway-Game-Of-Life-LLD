@@ -1,79 +1,87 @@
 package org.example;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.example.CellCharacter.*;
-
 class CellOperationsTest {
 
-    @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsZero() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 0));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 0));
+    private Cell aliveCell;
+    private Cell deadCell;
+
+    @BeforeEach
+    void setUp() {
+        aliveCell = new AliveCell();
+        deadCell = new DeadCell();
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsOne() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 1));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 1));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsZero() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 0));
+        assertEquals(deadCell, CellOperations.nextCell(false, 0));
     }
 
     @Test
-    void shouldReturnFilledIfNumberOfNeighboursIsTwoAndCellIsAlive() {
-        assertEquals(FILLED, CellOperations.nextCellCharacter(true, 2));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsOne() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 1));
+        assertEquals(deadCell, CellOperations.nextCell(false, 1));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfNeighboursIsTwoAndCellIsDead() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 2));
+    void shouldReturnAliveCellIfNumberOfNeighboursIsTwoAndCellIsAlive() {
+        assertEquals(aliveCell, CellOperations.nextCell(true, 2));
     }
 
     @Test
-    void shouldReturnFilledIfNumberOfNeighboursIsThreeAndCellIsAlive() {
-        assertEquals(FILLED, CellOperations.nextCellCharacter(true, 3));
+    void shouldReturnDeadCellIfNumberOfNeighboursIsTwoAndCellIsDead() {
+        assertEquals(deadCell, CellOperations.nextCell(false, 2));
     }
 
     @Test
-    void shouldReturnFilledIfNumberOfNeighboursIsThreeAndCellIsDead() {
-        assertEquals(FILLED, CellOperations.nextCellCharacter(false, 3));
+    void shouldReturnAliveCellIfNumberOfNeighboursIsThreeAndCellIsAlive() {
+        assertEquals(aliveCell, CellOperations.nextCell(true, 3));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsFour() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 4));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 4));
+    void shouldReturnAliveCellIfNumberOfNeighboursIsThreeAndCellIsDead() {
+        assertEquals(aliveCell, CellOperations.nextCell(false, 3));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsFive() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 5));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 5));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsFour() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 4));
+        assertEquals(deadCell, CellOperations.nextCell(false, 4));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsSix() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 6));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 6));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsFive() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 5));
+        assertEquals(deadCell, CellOperations.nextCell(false, 5));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsSeven() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 7));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 7));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsSix() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 6));
+        assertEquals(deadCell, CellOperations.nextCell(false, 6));
     }
 
     @Test
-    void shouldReturnEmptyIfNumberOfAliveNeighboursIsEight() {
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(true, 8));
-        assertEquals(EMPTY, CellOperations.nextCellCharacter(false, 8));
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsSeven() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 7));
+        assertEquals(deadCell, CellOperations.nextCell(false, 7));
+    }
+
+    @Test
+    void shouldReturnDeadCellIfNumberOfAliveNeighboursIsEight() {
+        assertEquals(deadCell, CellOperations.nextCell(true, 8));
+        assertEquals(deadCell, CellOperations.nextCell(false, 8));
     }
 
     @Test
     void shouldThrowAnErrorIfNumberOfAliveNeighboursIsLessThanZero() {
-        Throwable exception1 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCellCharacter(true, -1));
-        Throwable exception2 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCellCharacter(false, -1));
+        Throwable exception1 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCell(true, -1));
+        Throwable exception2 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCell(false, -1));
 
         assertEquals("Number of neighbours of a cell can only be between 0 and 8", exception1.getMessage());
         assertEquals("Number of neighbours of a cell can only be between 0 and 8", exception2.getMessage());
@@ -81,8 +89,8 @@ class CellOperationsTest {
 
     @Test
     void shouldThrowAnErrorIfNumberOfAliveNeighboursIsMoreThanEight() {
-        Throwable exception1 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCellCharacter(true, 9));
-        Throwable exception2 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCellCharacter(false, 9));
+        Throwable exception1 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCell(true, 9));
+        Throwable exception2 = assertThrows(IllegalStateException.class, () -> CellOperations.nextCell(false, 9));
 
         assertEquals("Number of neighbours of a cell can only be between 0 and 8", exception1.getMessage());
         assertEquals("Number of neighbours of a cell can only be between 0 and 8", exception2.getMessage());

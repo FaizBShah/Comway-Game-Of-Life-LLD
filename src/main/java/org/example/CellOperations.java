@@ -3,7 +3,7 @@ package org.example;
 import java.util.HashMap;
 import java.util.function.Function;
 
-import static org.example.CellCharacter.*;
+import static org.example.CellStatus.*;
 
 public class CellOperations {
     private static final HashMap<Integer, Function<Boolean, Boolean>> cellFunctionsMapping = new HashMap<>() {{
@@ -11,11 +11,15 @@ public class CellOperations {
         put(3, (isAlive) -> true);
     }};
 
-    public static CellCharacter nextCellCharacter(boolean isAlive, int numberOfAliveNeighbours) {
+    public static Cell nextCell(boolean isAlive, int numberOfAliveNeighbours) {
         if (numberOfAliveNeighbours < 0 || numberOfAliveNeighbours > 8) {
             throw new IllegalStateException("Number of neighbours of a cell can only be between 0 and 8");
         }
 
-        return cellFunctionsMapping.getOrDefault(numberOfAliveNeighbours, (alive) -> false).apply(isAlive) ? FILLED : EMPTY;
+        return cellFunctionsMapping
+                .getOrDefault(numberOfAliveNeighbours, (alive) -> false)
+                .apply(isAlive)
+                ? new AliveCell()
+                : new DeadCell();
     }
 }
